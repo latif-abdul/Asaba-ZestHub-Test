@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Menu;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $menu = Menu::All();
+    return view('app')->with(compact('menu'));
 });
-Route::resource('/menu', MenuController::class);
+Route::resource('menu', MenuController::class);
+Route::resource('pesanan', PesananController::class);

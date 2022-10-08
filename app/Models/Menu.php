@@ -14,8 +14,10 @@ class Menu extends Model
         "harga",
     ];
 
-    public function cust()
+    public function pesanan()
     {
-        return $this->hasMany(Cust::class);
+        return $this->hasMany(Pesanan::class);
     }
+
+    
 }

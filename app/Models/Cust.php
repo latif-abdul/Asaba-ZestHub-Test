@@ -13,8 +13,8 @@ class Cust extends Model
 		"nama_cust",
     ];
 
-    public function menu()
+    public function pesanan()
     {
-        return $this->hasMany(Menu::class);
+        return $this->hasMany(Pesanan::class);
     }
 }

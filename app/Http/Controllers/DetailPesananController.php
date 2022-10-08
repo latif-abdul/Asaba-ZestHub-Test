@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\DetailPesanan;
 use App\Models\Pesanan;
 use App\Models\Cust;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
-class PesananController extends Controller
+class DetailPesananController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,7 @@ class PesananController extends Controller
      */
     public function index()
     {
-        $pesanan = Pesanan::with('cust')->get();
-        return view('pesanan.index')->with(compact(['pesanan']));
+        //
     }
 
     /**
@@ -24,11 +24,12 @@ class PesananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $pesanan = Pesanan::find($request->id)->first();
         $cust = Cust::All();
         $menu = Menu::All();
-        return view('pesanan.tambah_pesanan')->with(compact('cust', 'menu'));
+        return view('tambah_pesanan')->with(compact(['pesanan', 'cust', 'menu']));
     }
 
     /**
@@ -39,7 +40,16 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataPemesan['cust_id'] = $request->cust_id_pemesan;
+        $pesanan = Pesanan::create($dataPemesan);
+
+        $data['cust_id'] = $request->cust_id;
+        $data['pesanan_id'] = $pesanan->id;
+        $data['jumlah'] = $request->jumlah;
+        $data['menu_id'] = $request->menu_id;
+        
+        DetailPesanan::create($data);
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**
@@ -48,9 +58,15 @@ class PesananController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $id = $request->id;
+        $pesanan = Pesanan::find($id);
+        $detail = DetailPesanan::where('pesanan_id' , '=', $id)
+            ->with('pesanan')
+            ->with('cust')
+            ->with('menu')->get();
+        return $detail;
     }
 
     /**
@@ -61,11 +77,7 @@ class PesananController extends Controller
      */
     public function edit($id)
     {
-        $pesanan = Pesanan::find($id)->first();
-
-        $cust = Cust::All();
-        $menu = Menu::All();
-        return view('pesanan.tambah_pesanan')->with(compact('id', 'cust', 'menu', 'pesanan'));
+        //
     }
 
     /**
