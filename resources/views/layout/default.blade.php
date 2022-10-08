@@ -2,7 +2,7 @@
 <html>
     <head>
         @include('layout.header_scripts')
-        <title>MAKROMEDIA</title>
+        <title>PESAN MAKAN</title>
     </head>
     <body>
         @include('sidebar')
