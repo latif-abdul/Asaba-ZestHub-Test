@@ -28,7 +28,9 @@ class PesananController extends Controller
     {
         $cust = Cust::All();
         $menu = Menu::All();
-        return view('pesanan.tambah_pesanan')->with(compact('cust', 'menu'));
+        $formAction = 'http://localhost:8000/api/pesanan';
+        $method = 'POST';
+        return view('pesanan.tambah_pesanan')->with(compact('cust', 'menu', 'formAction', 'method'));
     }
 
     /**
@@ -62,10 +64,11 @@ class PesananController extends Controller
     public function edit($id)
     {
         $pesanan = Pesanan::find($id)->first();
-
+        $formAction = 'http://localhost:8000/api/pesanan/'.$id;
+        $method = 'PUT';
         $cust = Cust::All();
         $menu = Menu::All();
-        return view('pesanan.tambah_pesanan')->with(compact('id', 'cust', 'menu', 'pesanan'));
+        return view('pesanan.tambah_pesanan')->with(compact('id', 'cust', 'menu', 'pesanan', 'formAction', 'method'));
     }
 
     /**

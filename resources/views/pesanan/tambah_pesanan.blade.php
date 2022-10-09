@@ -14,7 +14,7 @@
                         <select class="form-select" id="pilih_cust" name="cust_id_pemesan">
                             @foreach($cust as $customer)
                             @foreach($pesanan as $order)
-                            <option value="{{$customer->id}}" {{($order->cust_id == $customer->id) ? 'selected' : ''}}>{{$customer->nama_cust}}</option>
+                            <option value="{{$customer->id}}" {{ (old('cust_id_pemesan') ? old('cust_id_pemesan') : $order->cust_id ?? '') == $customer->id ? 'selected' : '' }}>{{$customer->nama_cust}}</option>
                             @endforeach
                             @endforeach
                         </select>
@@ -60,20 +60,20 @@
                                 type: "get",
                                 dataType: 'json',
                                 success: function(result){
-                                    result.forEach(function(rslt){
-                                        var total = rslt.jumlah*parseInt(rslt.menu.harga)
-                                        $( element ).after(
+                                    $.each(result, function (key, value) {
+                                        console.log(result)
+                                        var total = value.jumlah*parseInt(value.menu.harga)
+                                        $( element ).append(
                                                 '<tr>'+
-                                                    '<td>'+rslt.cust.nama_cust+'</td>'+
-                                                    '<td>'+rslt.menu.nama_menu+'</td>'+
-                                                    '<td>'+rslt.jumlah+'</td>'+
-                                                    '<td>'+rslt.menu.harga+'</td>'+
+                                                    '<td>'+value.cust.nama_cust+'</td>'+
+                                                    '<td>'+value.menu.nama_menu+'</td>'+
+                                                    '<td>'+value.jumlah+'</td>'+
+                                                    '<td>'+value.menu.harga+'</td>'+
                                                     '<td>'+total+'</td>'+
                                                 '</tr>');
-                                        $( element ).remove();
                                     })
                                     
-                                    console.log(result[0])
+                                    
                                 }
                             })
                         });
@@ -88,8 +88,8 @@
                         var actionUrl = form.attr('action');
 
                         $.ajax({
-                            type: "POST",
-                            url: "http://localhost:8000/api/pesanan",
+                            type: "{{$method}}",
+                            url: "{{$formAction}}",
                             data: form.serialize(), // serializes the form's elements.
                             success: function(data)
                             {

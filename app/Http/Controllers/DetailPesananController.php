@@ -89,7 +89,13 @@ class DetailPesananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data['cust_id'] = $request->cust_id;
+        $data['pesanan_id'] = $id;
+        $data['jumlah'] = $request->jumlah;
+        $data['menu_id'] = $request->menu_id;
+        
+        DetailPesanan::create($data);
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**
