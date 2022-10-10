@@ -19,5 +19,9 @@ Route::get('/', function () {
     return view('app')->with(compact('menu'));
 });
 Route::resource('menu', MenuController::class);
+Route::resource('cust', CustController::class);
 Route::resource('pesanan', PesananController::class);
 Route::get('menu/delete/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
+Route::get('cust/delete/{id}', [CustController::class, 'destroy'])->name('cust.delete');
+Route::get('pesanan/delete/{id}', [PesananController::class, 'destroy'])->name('pesanan.delete');
+Route::get('detailPesanan/{id}/edit', [DetailPesananController::class, 'show']);

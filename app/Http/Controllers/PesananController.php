@@ -91,6 +91,7 @@ class PesananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pesanan::find($id)->delete();
+        return redirect()->route('pesanan.index');
     }
 }

@@ -10,7 +10,7 @@
                     <h3>Menu</h3>
                     <form method="post" class="form-group" action="{{$formAction}}">
                     
-                        @if(isset($menu)) @method('PUT') @foreach($menu as $mn)
+                        @if(isset($mn)) @method('PUT') @else @method('POST') @endif
                         @csrf
                         <label for="nama_menu" class="col-sm-2 col-form-label">Nama Menu :</label>
                         <input class="form-control" type="text" id="nama_menu" name="nama_menu" value="{{{old('nama_menu',isset($mn->nama_menu)?$mn->nama_menu : '')}}}" placeholder="{{{old('nama_menu',isset($mn->nama_menu)?$mn->nama_menu : '')}}}"><br>
@@ -18,15 +18,6 @@
                         <input class="form-control" type="number" id="harga" name="harga" value="{{{old('harga',isset($mn->harga)?$mn->harga : '')}}}" placeholder="{{{old('harga',isset($mn->harga)?$mn->harga : '')}}}">
                         <br>
                         <button type="submit" id="tambah" class="btn btn-primary form-control btn-submit">Simpan</button>
-                         @endforeach
-                         @else
-                        <label for="nama_menu" class="col-sm-2 col-form-label">Nama Menu :</label>
-                        <input class="form-control" type="text" id="nama_menu" name="nama_menu" value="{{{old('nama_menu',isset($mn->nama_menu)?$mn->nama_menu : '')}}}" placeholder="{{{old('nama_menu',isset($mn->nama_menu)?$mn->nama_menu : '')}}}"><br>
-                        <label for="pilih_cust" class="col-sm-2 col-form-label">Harga :</label>
-                        <input class="form-control" type="number" id="harga" name="harga" value="{{{old('harga',isset($mn->harga)?$mn->harga : '')}}}" placeholder="{{{old('harga',isset($mn->harga)?$mn->harga : '')}}}">
-                        <br>
-                        <button type="submit" id="tambah" class="btn btn-primary form-control btn-submit">Simpan</button>
-                         @endIf
                     </form>
                 </div>
             </div>

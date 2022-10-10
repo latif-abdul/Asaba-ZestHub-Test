@@ -49,7 +49,7 @@ class DetailPesananController extends Controller
         $data['menu_id'] = $request->menu_id;
         
         DetailPesanan::create($data);
-        return response()->json(["result" => "ok"], 201);
+        return $pesanan;
     }
 
     /**
@@ -63,9 +63,11 @@ class DetailPesananController extends Controller
         $id = $request->id;
         $pesanan = Pesanan::find($id);
         $detail = DetailPesanan::where('pesanan_id' , '=', $id)
-            ->with('pesanan')
+            // ->selectRaw('(jumlah * harga) as total')
+            ->with('pesanan') 
             ->with('cust')
-            ->with('menu')->get();
+            ->with('menu');
+            
         return $detail;
     }
 

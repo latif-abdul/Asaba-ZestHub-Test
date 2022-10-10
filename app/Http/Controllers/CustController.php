@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Cust;
 use Illuminate\Http\Request;
 
 class CustController extends Controller
@@ -13,7 +13,8 @@ class CustController extends Controller
      */
     public function index()
     {
-        //
+        $cust = Cust::All();
+        return view('cust.index')->with(compact('cust'));
     }
 
     /**
@@ -23,7 +24,8 @@ class CustController extends Controller
      */
     public function create()
     {
-        //
+        $formAction = "http://localhost:8000/cust";
+        return view('cust.manage')->with(compact('formAction'));
     }
 
     /**
@@ -34,7 +36,10 @@ class CustController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data['nama_cust'] = $request->nama_cust;
+        
+        Cust::create($data);
+        return redirect()->route('cust.index');
     }
 
     /**
@@ -56,7 +61,9 @@ class CustController extends Controller
      */
     public function edit($id)
     {
-        //
+        $formAction = "http://localhost:8000/cust/".$id;
+        $mn = Cust::where('id', $id)->first();
+        return view('cust.manage')->with(compact('formAction', 'mn'));
     }
 
     /**
@@ -68,7 +75,11 @@ class CustController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cust = Cust::find($id);
+        $data['nama_cust'] = $request->nama_cust;
+        
+        $cust->update($data);
+        return redirect()->route('cust.index');
     }
 
     /**
@@ -79,6 +90,7 @@ class CustController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cust::find($id)->delete();
+        return redirect()->route('cust.index');
     }
 }

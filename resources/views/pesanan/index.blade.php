@@ -21,7 +21,10 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $order->cust->nama_cust }}</td>
-                                <td><a class="btn btn-primary" type="button" href="{{route('pesanan.edit', ['pesanan' => $order->id])}}">Edit</a></td>
+                                <td>
+                                    <a class="btn btn-primary" type="button" href="{{route('pesanan.edit', ['pesanan' => $order->id])}}">Edit</a>
+                                    <a class="btn btn-danger" type="button" href="{{route('pesanan.delete', ['id' => $order->id])}}">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbodY>

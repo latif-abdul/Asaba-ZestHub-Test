@@ -7,20 +7,24 @@
                 <div class="card-header">{{ __('Menu') }}</div>
 
                 <div class="card-body">
+                    <a class="btn btn-primary" href="{{route('cust.create')}}">Tambah Cust</a>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Menu</th>
-                                <th scope="col">Harga</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($menu as $mn)
+                            @foreach($cust as $mn)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $mn->nama_menu }}</td>
-                                <td>{{ $mn->harga }}</td>
+                                <td>{{ $mn->nama_cust }}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{route('cust.edit', ['cust'=>$mn->id])}}">Edit</a>
+                                    <a class="btn btn-danger" href="{{route('cust.delete', ['id'=>$mn->id])}}">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbodY>

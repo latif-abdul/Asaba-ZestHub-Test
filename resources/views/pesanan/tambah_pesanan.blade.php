@@ -13,9 +13,7 @@
                         <label for="pilih_cust" class="col-sm-2 col-form-label">Pemesan :</label>
                         <select class="form-select" id="pilih_cust" name="cust_id_pemesan">
                             @foreach($cust as $customer)
-                            @foreach($pesanan as $order)
                             <option value="{{$customer->id}}" {{ (old('cust_id_pemesan') ? old('cust_id_pemesan') : $order->cust_id ?? '') == $customer->id ? 'selected' : '' }}>{{$customer->nama_cust}}</option>
-                            @endforeach
                             @endforeach
                         </select>
                         <label for="pilih_cust" class="col-sm-2 col-form-label">Customer :</label>
@@ -33,8 +31,8 @@
                             </select>
                             <label for="jumlah" class="col-sm-2 col-form-label">Jumlah</label>
                             <input type="number" class="form-group col-sm-4" name="jumlah" id="jumlah">
-                        </div>
-                        <button type="submit" id="tambah" class="btn btn-submit">Pesan</button>
+                        </div><br>
+                        <button type="submit" id="tambah" onClick="load_data()" class="btn btn-submit btn-primary">Tambah</button>
                     </form>
                     <table class="table">
                         <thead>
@@ -49,6 +47,12 @@
                         <tbody id="detail">
 
                         </tbody>
+                        <tfoot>
+                            <tr>
+                            <th colspan="4">Total</th>
+                            <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
                     <script>
                         function load_data(){
@@ -117,10 +121,10 @@
                             data: form.serialize(), // serializes the form's elements.
                             success: function(data)
                             {
-                            ; // show response from the php script.
+                                $('#id').text(data.id)
                             }
                         });
-
+                        
                         });
                         
                     </script>

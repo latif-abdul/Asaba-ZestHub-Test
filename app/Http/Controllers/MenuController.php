@@ -63,9 +63,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $formAction = "http://localhost:8000/menu/edit";
-        $menu = Menu::find($id)->get();
-        return view('menu.manage')->with(compact('formAction', 'menu'));
+        $formAction = "http://localhost:8000/menu/".$id;
+        $mn = Menu::where('id', $id)->first();
+        return view('menu.manage')->with(compact('formAction', 'mn'));
     }
 
     /**
