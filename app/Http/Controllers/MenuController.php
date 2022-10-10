@@ -25,7 +25,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        $formAction = "http://localhost:8000/menu";
+        return view('menu.manage')->with(compact('formAction'));
     }
 
     /**
@@ -36,7 +37,11 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data['nama_menu'] = $request->nama_menu;
+        $data['harga'] = $request->harga;
+        
+        Menu::create($data);
+        return redirect()->route('menu.index');
     }
 
     /**
@@ -58,7 +63,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $formAction = "http://localhost:8000/menu/edit";
+        $menu = Menu::find($id)->get();
+        return view('menu.manage')->with(compact('formAction', 'menu'));
     }
 
     /**
@@ -70,7 +77,12 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menu = Menu::find($id);
+        $data['nama_menu'] = $request->nama_menu;
+        $data['harga'] = $request->harga;
+        
+        $menu->update($data);
+        return redirect()->route('menu.index');
     }
 
     /**
@@ -81,6 +93,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Menu::find($id)->delete();
+        return redirect()->route('menu.index');
     }
 }

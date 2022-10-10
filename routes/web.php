@@ -20,3 +20,4 @@ Route::get('/', function () {
 });
 Route::resource('menu', MenuController::class);
 Route::resource('pesanan', PesananController::class);
+Route::get('menu/delete/{id}', [MenuController::class, 'destroy'])->name('menu.delete');

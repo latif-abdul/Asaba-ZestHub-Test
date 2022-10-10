@@ -7,12 +7,14 @@
                 <div class="card-header">{{ __('Menu') }}</div>
 
                 <div class="card-body">
+                    <a class="btn btn-primary" href="{{route('menu.create')}}">Tambah Menu</a>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Menu</th>
                                 <th scope="col">Harga</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -21,6 +23,10 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $mn->nama_menu }}</td>
                                 <td>{{ $mn->harga }}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{route('menu.edit', ['menu'=>$mn->id])}}">Edit</a>
+                                    <a class="btn btn-danger" href="{{route('menu.delete', ['id'=>$mn->id])}}">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbodY>

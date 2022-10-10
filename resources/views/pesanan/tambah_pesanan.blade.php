@@ -34,7 +34,7 @@
                             <label for="jumlah" class="col-sm-2 col-form-label">Jumlah</label>
                             <input type="number" class="form-group col-sm-4" name="jumlah" id="jumlah">
                         </div>
-                        <button type="submit" class="btn btn-submit">Pesan</button>
+                        <button type="submit" id="tambah" class="btn btn-submit">Pesan</button>
                     </form>
                     <table class="table">
                         <thead>
@@ -51,33 +51,57 @@
                         </tbody>
                     </table>
                     <script>
-                        $( document ).ready(function() {
-                        let endpoint = 'http://localhost:8000/api/pesanan'
+                        function load_data(){
+                            let endpoint = 'http://localhost:8000/api/pesanan'
+                            $( "#detail" ).html('')
+                            $( "#detail" ).each(function( index, element ) {
+                                $.ajax({
+                                    url: endpoint + "?id=" + $( '#id' ).val(),
+                                    type: "get",
+                                    dataType: 'json',
+                                    success: function(result){
+                                        $.each(result, function (key, value) {
+                                            console.log(result)
+                                            var total = value.jumlah*parseInt(value.menu.harga)
+                                            $( element ).append(
+                                                    '<tr>'+
+                                                        '<td>'+value.cust.nama_cust+'</td>'+
+                                                        '<td>'+value.menu.nama_menu+'</td>'+
+                                                        '<td>'+value.jumlah+'</td>'+
+                                                        '<td>'+value.menu.harga+'</td>'+
+                                                        '<td>'+total+'</td>'+
+                                                        '<td><a class="btn btn-danger" onClick="remove('+value.id+')" id="'+value.id+'">Delete</a></td>'+
+                                                    '</tr>');
+                                        })
+                                        
+                                        
+                                    }
+                                })
+                            });
+                        }; 
 
-                        $( "#detail" ).each(function( index, element ) {
+                        $( document ).ready(function() {                        
+                            load_data();
+                        });
+                    $('#tambah').click(function(){
+                        load_data();
+                    });
+                    
+                    </script>
+                    <script>
+                        function remove(id){
+                            var actionUrl = 'http://localhost:8000/api/pesanan/' + id;
+                            console.log(actionUrl)
                             $.ajax({
-                                url: endpoint + "?id=" + $( '#id' ).val(),
-                                type: "get",
-                                dataType: 'json',
-                                success: function(result){
-                                    $.each(result, function (key, value) {
-                                        console.log(result)
-                                        var total = value.jumlah*parseInt(value.menu.harga)
-                                        $( element ).append(
-                                                '<tr>'+
-                                                    '<td>'+value.cust.nama_cust+'</td>'+
-                                                    '<td>'+value.menu.nama_menu+'</td>'+
-                                                    '<td>'+value.jumlah+'</td>'+
-                                                    '<td>'+value.menu.harga+'</td>'+
-                                                    '<td>'+total+'</td>'+
-                                                '</tr>');
-                                    })
-                                    
-                                    
+                                type: "DELETE",
+                                url: actionUrl,
+                                success: function(data)
+                                {
+                                ; // show response from the php script.
                                 }
-                            })
-                        });
-                        });
+                            });
+                            load_data();
+                        };
                     </script>
                     <script>
                         $("#detail_pesanan").submit(function(e) {
@@ -93,11 +117,12 @@
                             data: form.serialize(), // serializes the form's elements.
                             success: function(data)
                             {
-                            alert(data); // show response from the php script.
+                            ; // show response from the php script.
                             }
                         });
 
                         });
+                        
                     </script>
                 </div>
             </div>

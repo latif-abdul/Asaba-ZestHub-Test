@@ -106,6 +106,7 @@ class DetailPesananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DetailPesanan::find($id)->delete();
+        return response()->json(["result" => "ok"], 201);
     }
 }
